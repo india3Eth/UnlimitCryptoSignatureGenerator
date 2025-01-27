@@ -92,42 +92,49 @@ export default function SignatureGenerator() {
         </div>
 
         <div className="mb-4 space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="apiType">Select API Type</Label>
-          <Select onValueChange={handleApiTypeChange}>
-            <SelectTrigger className="border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-              <SelectValue placeholder="Select API type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="normal">Normal API Integration</SelectItem>
-              <SelectItem value="whitelabel">White Label APIs</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {selectedApiType && (
           <div className="space-y-2">
-          <Label htmlFor="endpoint">Select API Endpoint</Label>
-          <Select onValueChange={handleEndpointChange}>
-            <SelectTrigger className="border-2 border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-600 focus:border-transparent">
-              <SelectValue placeholder="Select an API endpoint" />
-            </SelectTrigger>
-            <SelectContent>
-            {filteredEndpoints.map((endpoint) => (
-                <SelectItem key={endpoint.name} value={endpoint.name}>
-                  {endpoint.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <Label htmlFor="apiType">Select API Type</Label>
+            <Select onValueChange={handleApiTypeChange}>
+              <SelectTrigger className="border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <SelectValue placeholder="Select API type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="normal">Normal API Integration</SelectItem>
+                <SelectItem value="whitelabel">White Label APIs</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
-        )}
+
+          {selectedApiType && (
+            <div className="space-y-2">
+              <Label htmlFor="endpoint">Select API Endpoint</Label>
+              <Select onValueChange={handleEndpointChange}>
+                <SelectTrigger className="border-2 border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+                  <SelectValue placeholder="Select an API endpoint" />
+                </SelectTrigger>
+                <SelectContent>
+                  {filteredEndpoints.map((endpoint) => (
+                    <SelectItem key={endpoint.name} value={endpoint.name}>
+                      {endpoint.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
         </div>
 
         {selectedEndpoint && (
           <div className="mb-4 p-4 bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-            <h2 className="text-xl font-bold mb-2 text-purple-600">Current Path:</h2>
-            <p className="break-all font-mono">{currentPath}</p>
+            <h2 className="text-xl font-bold mb-2 text-purple-600">Current Endpoint:</h2>
+            <p className="font-mono mb-2">
+              <span className="font-bold text-purple-600">Method: </span>
+              {selectedEndpoint.method}
+            </p>
+            <p className="break-all font-mono">
+              <span className="font-bold text-purple-600">Path: </span>
+              {currentPath}
+            </p>
           </div>
         )}
 

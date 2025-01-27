@@ -17,6 +17,13 @@ export const apiEndpoints: ApiEndpoint[] = [
     type: "normal",
   },
   {
+    name: "Create KYC customer",
+    path: "/v1/external/customers/{CustomerId}/kyc",
+    method: "GET",
+    pathParams: ["CustomerId"],
+    type: "whitelabel",
+  },
+  {
     name: "Get Customer KYC",
     path: "/v1/external/customers/{CustomerId}/kyc",
     method: "GET",
