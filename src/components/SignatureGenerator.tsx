@@ -1,17 +1,33 @@
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { apiEndpoints, generateSignature, type ApiEndpoint } from "../utils/apiUtils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
+type ApiType = "normal" | "whitelabel"
+
 export default function SignatureGenerator() {
   const [apiKey, setApiKey] = useState("")
   const [secret, setSecret] = useState("")
+  const [selectedApiType, setSelectedApiType] = useState<ApiType | "">("")
   const [selectedEndpoint, setSelectedEndpoint] = useState<ApiEndpoint | null>(null)
   const [pathParams, setPathParams] = useState<Record<string, string>>({})
   const [signature, setSignature] = useState("")
   const [currentPath, setCurrentPath] = useState("")
+
+  const filteredEndpoints = useMemo(() => {
+    if (!selectedApiType) return []
+    return apiEndpoints.filter((endpoint) => endpoint.type === selectedApiType)
+  }, [selectedApiType])
+
+  const handleApiTypeChange = (value: string) => {
+    setSelectedApiType(value as ApiType)
+    setSelectedEndpoint(null)
+    setPathParams({})
+    setCurrentPath("")
+    setSignature("")
+  }
 
   const handleEndpointChange = (value: string) => {
     const endpoint = apiEndpoints.find((e) => e.name === value)
@@ -75,20 +91,37 @@ export default function SignatureGenerator() {
           </div>
         </div>
 
-        <div className="mb-4 space-y-2">
+        <div className="mb-4 space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="apiType">Select API Type</Label>
+          <Select onValueChange={handleApiTypeChange}>
+            <SelectTrigger className="border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <SelectValue placeholder="Select API type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="normal">Normal API Integration</SelectItem>
+              <SelectItem value="whitelabel">White Label APIs</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {selectedApiType && (
+          <div className="space-y-2">
           <Label htmlFor="endpoint">Select API Endpoint</Label>
           <Select onValueChange={handleEndpointChange}>
             <SelectTrigger className="border-2 border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-purple-600 focus:border-transparent">
               <SelectValue placeholder="Select an API endpoint" />
             </SelectTrigger>
             <SelectContent>
-              {apiEndpoints.map((endpoint) => (
+            {filteredEndpoints.map((endpoint) => (
                 <SelectItem key={endpoint.name} value={endpoint.name}>
                   {endpoint.name}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
+          </div>
+        )}
         </div>
 
         {selectedEndpoint && (

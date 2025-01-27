@@ -5,15 +5,23 @@ export interface ApiEndpoint {
   path: string
   method: string
   pathParams: string[]
+  type: "normal" | "whitelabel"
 }
 
 export const apiEndpoints: ApiEndpoint[] = [
-  { name: "Get Configuration", path: "/onramp/v1/configuration", method: "GET", pathParams: [] },
+  {
+    name: "Get Configuration",
+    path: "/onramp/v1/configuration",
+    method: "GET",
+    pathParams: [],
+    type: "normal",
+  },
   {
     name: "Get Customer KYC",
     path: "/v1/external/customers/{CustomerId}/kyc",
     method: "GET",
     pathParams: ["CustomerId"],
+    type: "whitelabel",
   },
   // Add more API endpoints here
 ]
