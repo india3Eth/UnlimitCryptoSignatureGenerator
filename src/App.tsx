@@ -1,9 +1,12 @@
 import SignatureGenerator from "./components/SignatureGenerator"
+import ErrorBoundary from "./components/common/ErrorBoundary"
 
 function App() {
   return (
     <div className="App">
-      <SignatureGenerator />
+      <ErrorBoundary>
+        <SignatureGenerator />
+      </ErrorBoundary>
     </div>
   )
 }
