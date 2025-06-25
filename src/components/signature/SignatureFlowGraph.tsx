@@ -75,36 +75,36 @@ function SignatureFlowGraph({
       {
         title: "1. Input Collection",
         content: step1Content,
-        isActive: !inputsComplete && !isGenerating,
-        isComplete: inputsComplete && !isGenerating,
+        isActive: Boolean(!inputsComplete && !isGenerating),
+        isComplete: Boolean(inputsComplete && !isGenerating),
         bgColor: "#FF5E5B"
       },
       {
         title: "2. Path Construction",
         content: step2Content,
-        isActive: inputsComplete && !paramsComplete && !isGenerating,
-        isComplete: inputsComplete && paramsComplete && !isGenerating,
+        isActive: Boolean(inputsComplete && !paramsComplete && !isGenerating),
+        isComplete: Boolean(inputsComplete && paramsComplete && !isGenerating),
         bgColor: "#00CECB"
       },
       {
         title: "3. Data Concatenation",
         content: step3Content,
-        isActive: isGenerating && !signature,
-        isComplete: inputsComplete && paramsComplete && !isGenerating,
+        isActive: Boolean(isGenerating && !signature),
+        isComplete: Boolean(inputsComplete && paramsComplete && !isGenerating),
         bgColor: "#FFED66"
       },
       {
         title: "4. HMAC-SHA256",
         content: step4Content,
-        isActive: isGenerating,
-        isComplete: !!signature,
+        isActive: Boolean(isGenerating),
+        isComplete: Boolean(signature),
         bgColor: "#FF6B6B"
       },
       {
         title: "5. Final Signature",
         content: step5Content,
         isActive: false,
-        isComplete: !!signature,
+        isComplete: Boolean(signature),
         bgColor: "#4ECDC4"
       }
     ]
